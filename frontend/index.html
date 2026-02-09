@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mis Finanzas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <div id="overlay" class="overlay" aria-hidden="true"></div>
+
+  <button id="darkToggle" class="dark-toggle" aria-label="Modo oscuro">🌙</button>
+
+  <div class="container">
+
+  <h1>Finanzas personales</h1>
+
+  <button id="addBtn" class="add-btn" aria-label="Añadir">+</button>
+
+  <!-- Panel lateral para añadir/editar (oculto por defecto) -->
+  <div id="sidePanel" class="side-panel" aria-hidden="true">
+    <div class="side-panel-header">
+      <h2 id="panelTitle">Añadir transacción</h2>
+      <button id="closePanel" class="close-panel">×</button>
+    </div>
+    <form id="form">
+      <input type="date" id="date" required>
+      <input type="number" id="amount" step="0.01" placeholder="Importe" required>
+      <select id="type">
+        <option value="expense">Gasto</option>
+        <option value="income">Ingreso</option>
+      </select>
+      <input type="text" id="category" placeholder="Categoría" required>
+      <input type="text" id="description" placeholder="Descripción">
+      <button type="submit">Guardar</button>
+    </form>
+  </div>
+
+  <hr>
+
+  <h3>Filtrar por fecha</h3>
+  <div id="filters">
+    Desde: <input type="date" id="filterStart">
+    Hasta: <input type="date" id="filterEnd">
+    Categoría: <select id="filterCategory"><option value="">Todas</option></select>
+    <button id="applyFilter">Aplicar filtro</button>
+    <button id="clearFilter">Quitar filtro</button>
+  </div>
+
+  <!-- Dashboard resumen -->
+    <div class="summary-container">
+        <div class="summary-card" id="totalIncome">Ingresos: $0.00</div>
+        <div class="summary-card" id="totalExpense">Gastos: $0.00</div>
+        <div class="summary-card" id="balance">Balance: $0.00</div>
+    </div>
+  
+  <table border="1" id="table">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Importe</th>
+        <th>Tipo</th>
+        <th>Categoría</th>
+        <th>Descripción</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div id="pagination-container">
+  <label for="itemsPerPage">Mostrar:</label>
+  <select id="itemsPerPage">
+    <option value="5">5</option>
+    <option value="10" selected>10</option>
+    <option value="20">20</option>
+  </select>
+  <span id="pagination-info"></span>
+  <button id="prevPage">Anterior</button>
+  <button id="nextPage">Siguiente</button>
+</div>
+
+  <div class="chart-container">
+    <canvas id="categoryChart"></canvas>
+    <canvas id="monthlyChart"></canvas>
+  </div>
+
+  </div> <!-- .container -->
+
+  <script src="app.js"></script>
+</body>
+</html>
