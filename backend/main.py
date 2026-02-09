@@ -5,6 +5,7 @@ from datetime import date
 from fastapi import Body, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 import os
 
 
@@ -16,6 +17,11 @@ Base.metadata.create_all(bind=engine)
 frontend_path = os.path.join(os.path.dirname(__file__), "../frontend")
 app.mount("/static", StaticFiles(directory=frontend_path), name="frontend")
 
+@app.get("/")
+def root():
+    index_path = os.path.join(os.path.dirname(__file__), "../frontend/index.html")
+    return FileResponse(index_path)
+
 
 
 app.add_middleware(
@@ -26,8 +32,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-def root():
+@app.get("/api/status")
+def api_status():
     return {"status": "API de Finanzas funcionando"}
 
 @app.get("/transactions")
